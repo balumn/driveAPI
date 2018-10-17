@@ -132,8 +132,10 @@
                         {% for key,value in xx.items %}
                             {% if key == "title" %}
                                 <b> <br> <h3> {{ value }} </h3></b>
-                            {% else %}
+                            {% elif key == "altLink" %}
                                 <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                            {% else %}
+                                <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
                             {% endif %}
                         {% endfor %}
 

@@ -68,9 +68,15 @@ def homme(request):
     xx=[]
     for x in list_files(drive_service):
         if x.get('title') and x.get('alternateLink'):
-            xx.append({'title':x['title'],'altLink':x['alternateLink']})
+            fid="https://drive.google.com/uc?export=download&id="+x['id']
+            xx.append({'title':x['title'],'altLink':x['alternateLink'],'dL':fid})
     with open("data_file.json", "w") as fList: 
         json.dump(xx, fList)
+    yy=[]
+    for y in list_files(drive_service):
+        yy.append(y)
+    with open("data_file_12.json", "w") as fList: 
+        json.dump(y, fList)
     
     # printing file names on page
     # xx=[]

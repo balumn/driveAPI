@@ -125,15 +125,21 @@
 
         <h1>Its Your Google Drive Files Gowryy !!</h1>
         <br>
-        {% for x in fList %}
-        <div class="itemF">
-            <div class="picture left" style="width:278px;">
-                <img src="https://openclipart.org/image/2400px/svg_to_png/97543/text-file-icon.png" width="250" height="90">
-                <br>
-                <b> {{ x }} </b>
-            </div>
-        </div>
-       {% endfor %}
+        {% for xx in fList %}
+                <div class="itemF">
+                    <div class="picture left" style="width:278px;">
+                        <img src="https://openclipart.org/image/2400px/svg_to_png/97543/text-file-icon.png" width="250" height="90">
+                        {% for key,value in xx.items %}
+                            {% if key == "title" %}
+                                <b> <br> <h3> {{ value }} </h3></b>
+                            {% else %}
+                                <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+        {% endfor %}
 
     </div>
 </body>

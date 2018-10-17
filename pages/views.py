@@ -73,11 +73,19 @@ def homme(request):
         json.dump(xx, fList)
     
     # printing file names on page
-    xx=[]
-    for x in list_files(drive_service):
-        if x.get('title'):
-            xx.append(x['title'])
-    return render_to_response("home.html",{"fList" : xx})
+    # xx=[]
+    # for x in list_files(drive_service):
+    #     if x.get('title'):
+    #         xx.append(x['title'])
+
+    # reading from JSON file -- Expermental feature
+    with open('data_file.json') as json_file:
+        dataP = json.load(json_file)
+
+    
+    return render_to_response("home.html",{"fList" : dataP})
+
+
 
 def about(request):
     return render(request, "about.html",{})

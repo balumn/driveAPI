@@ -73,7 +73,8 @@ def homme(request):
             'altLink':x['alternateLink'],
             'dL':fid,
             'iLink':x['iconLink'],
-            'ctype':x['mimeType']
+            'ctype':x['mimeType'],
+            'id':x['id']
             })
     with open("data_file.json", "w") as fList: 
         json.dump(xx, fList)

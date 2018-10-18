@@ -118,12 +118,6 @@
         </div>
     </div>
     <div>
-        <!-- <form method='POST' action='/add_comment/'>
-        {% csrf_token %}
-        <input type='hidden' value='{{ r.id }}' name='id'>
-        <input type="submit" name='prepair_comment' value="Make a Comment">
-        </form> -->
-
         <h1>Its Your Google Drive Files Gowryy !!</h1>
         <br>
         {% for xx in fList %}
@@ -131,7 +125,7 @@
                     <div class="picture left" style="width:auto; padding:15px; height=150px;">
                         {% for key,value in xx.items %}
                             {% if value == "application/vnd.google-apps.folder" %}
-                                <a href="value"> I'm a folder </a>
+                                <a href="/folder/{{xx.id}}" target="_blank"> I'm a folder </a>
                             {% endif %}
                             {% if key == "title" %}
                                 <b> <br> <h3> {{ value }} </h3></b>
@@ -139,10 +133,9 @@
                                 <a href={{value}} target="_blank"> <br> <b> View </b> </a>
                             {% elif key == "dL" %}
                                 <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
-                            {% else %}
+                            {% elif key == "iLink" %}
                                 <img src={{value}} width="100" >
                             {% endif %}
-                            {% else %}
                         {% endfor %}
 
                     </div>

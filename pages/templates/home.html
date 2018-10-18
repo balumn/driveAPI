@@ -125,7 +125,7 @@
                     <div class="picture left" style="width:auto; padding:15px; height=150px;">
                         {% for key,value in xx.items %}
                             {% if value == "application/vnd.google-apps.folder" %}
-                                <a href="/folder/{{xx.id}}" target="_blank"> I'm a folder </a>
+                                <a href="{% url 'pages' 'id=' %}{{xx.id}}" target="_blank"> I'm a folder </a>
                             {% endif %}
                             {% if key == "title" %}
                                 <b> <br> <h3> {{ value }} </h3></b>

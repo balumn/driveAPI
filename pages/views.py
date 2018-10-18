@@ -101,4 +101,5 @@ def homme(request):
 
 
 def about(request):
-    return render(request, "about.html",{})
+    apple = request.GET.get()
+    return render(request, "about.html",{'app':apple})

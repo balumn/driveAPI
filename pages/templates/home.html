@@ -128,14 +128,15 @@
         {% for xx in fList %}
                 <div class="itemF">
                     <div class="picture left" style="width:278px;">
-                        <img src="https://openclipart.org/image/2400px/svg_to_png/97543/text-file-icon.png" width="250" height="90">
                         {% for key,value in xx.items %}
                             {% if key == "title" %}
                                 <b> <br> <h3> {{ value }} </h3></b>
                             {% elif key == "altLink" %}
                                 <a href={{value}} target="_blank"> <br> <b> View </b> </a>
-                            {% else %}
+                            {% elif key == "dL" %}
                                 <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
+                            {% else %}
+                                <img src={{value}} width="100" height="90">
                             {% endif %}
                         {% endfor %}
 

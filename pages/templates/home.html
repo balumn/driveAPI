@@ -7,8 +7,11 @@
         body {
             font-family: "Trebuchet MS", Helvetica, sans-serif;
             text-align: center;
-            min-width: 260px;
+            min-width: 100px;
             color: #333;
+        }
+        itemF{
+            background: #70a876;
         }
 
         #main {
@@ -16,7 +19,7 @@
             padding: 15px;
             border: 0px solid;
             border-radius: 5px;
-            background: #eee;
+            background: #70a876;
         }
 
         img {
@@ -29,13 +32,13 @@
         #img-div {
             margin: -5px;
             margin-top: 20px;
-            width: 100%;
+            width: 80%;
             border: 5px solid white;
             background: white;
         }
 
         #img-caption {
-            margin: 15px;
+            margin: 5px;
         }
 
         .headline {
@@ -44,30 +47,28 @@
         }
 
         ul {
-            max-width: 550px;
+            max-width: 250px;
             margin: 0 auto;
             text-align: left;
         }
 
         li {
-            margin: 10px;
+            margin: 5px;
         }
 
         blockquote {
             font-style: italic;
         }
         
-    </style>
-    <style type="text/css">
         .picture {
-            background-color: #F9F9F9;
+            background-color: #fff;
             border: 1px solid #CCCCCC;
             padding: 3px;
-            margin: 20px;
+            margin: 10px;
             font: 11px/1.4em Arial, sans-serif;
         }
         .picture img {
-            border: 1px solid #CCCCCC;
+            border: 0px solid #fc55bf;
             vertical-align: middle;
             margin-bottom: 3px;
         }
@@ -88,7 +89,7 @@
         <h1>A Django Lover</h1>
         <div>who saved a billion lives</div>
         <div id="img-div">
-            <img id="image" src="https://c2.staticflickr.com/4/3689/10613180113_fdf7bcd316_b.jpg" alt "pic from flickr">
+            <img id="img" src="https://c2.staticflickr.com/4/3689/10613180113_fdf7bcd316_b.jpg" alt "pic from flickr">
             <div id="img-caption">
                 Dr. Norman Borlaug, second from left, trains biologists in Mexico on how to increase wheat yields - part of his life-long
                 war on hunger.
@@ -127,7 +128,7 @@
         <br>
         {% for xx in fList %}
                 <div class="itemF">
-                    <div class="picture left" style="width:278px;">
+                    <div class="picture left" style="width:auto; padding:15px; height=150px;">
                         {% for key,value in xx.items %}
                             {% if key == "title" %}
                                 <b> <br> <h3> {{ value }} </h3></b>
@@ -136,7 +137,7 @@
                             {% elif key == "dL" %}
                                 <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
                             {% else %}
-                                <img src={{value}} width="100" height="90">
+                                <img src={{value}} width="100" >
                             {% endif %}
                         {% endfor %}
 

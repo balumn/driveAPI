@@ -130,6 +130,9 @@
                 <div class="itemF">
                     <div class="picture left" style="width:auto; padding:15px; height=150px;">
                         {% for key,value in xx.items %}
+                            {% if value == "application/vnd.google-apps.folder" %}
+                                <a href="value"> I'm a folder </a>
+                            {% endif %}
                             {% if key == "title" %}
                                 <b> <br> <h3> {{ value }} </h3></b>
                             {% elif key == "altLink" %}
@@ -139,6 +142,7 @@
                             {% else %}
                                 <img src={{value}} width="100" >
                             {% endif %}
+                            {% else %}
                         {% endfor %}
 
                     </div>

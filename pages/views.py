@@ -100,6 +100,6 @@ def homme(request):
 
 
 
-def about(request):
-    apple = request.GET.get()
+def about(request,folder=None):
+    apple = request.GET.get('folder')
     return render(request, "about.html",{'app':apple})

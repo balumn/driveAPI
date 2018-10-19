@@ -13,6 +13,7 @@ from oauth2client.file import Storage
 from googleapiclient.discovery import build
 from oauth2client.client import OAuth2WebServerFlow
 
+
 # from .forms import PostForm
 
 # Create your views here.
@@ -101,5 +102,77 @@ def homme(request):
 
 
 def about(request,folder=None):
-    apple = request.GET.get('folder')
-    return render(request, "about.html",{'app':apple})
+    fid = request.GET.get('folder')
+    fid = str(fid)
+    CLIENT_ID='500291203402-7vp5mndmfikul17fojcpk152f61vdeup.apps.googleusercontent.com'
+    CLIENT_SECRET='DSalAwqk8sp9u_yH--LLrxS1'
+    OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
+    REDIRECT_URI ='urn:ietf:wg:oauth:2.0:oob'
+    OUT_PATH = os.path.join(os.path.dirname(__file__), 'out')
+    CREDS_FILE = os.path.join(os.path.dirname(__file__), 'credentials_gow.json')
+
+    if not path.exists(OUT_PATH):
+        os.makedirs(OUT_PATH)
+
+    storage = Storage(CREDS_FILE)
+    credentials = storage.get()
+    if credentials is None:
+        # Run through the OAuth flow and retrieve credentials
+        flow = OAuth2WebServerFlow(CLIENT_ID, CLIENT_SECRET, OAUTH_SCOPE, REDIRECT_URI)
+        authorize_url = flow.step1_get_authorize_url()
+        pastedCode='4/ZABdayNUfm_EN0ehvQed6m3bGdUXVqX2y7DEsTHAI9j3H-9XGHcG92E'
+        code = pastedCode
+        credentials = flow.step2_exchange(code)
+        storage.put(credentials)
+
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+
+    drive_service = build('drive', 'v2', http=http)
+
+    # get details of file
+    ff=[]
+    def print_file_metadata(service, file_id):
+        page_token = None
+        while True:
+            param = {}
+            if page_token:
+                param['pageToken'] = page_token
+            file = service.files().get(fileId=file_id).execute()
+            yield file
+
+
+
+    def print_files_in_folder(service, folder_id):
+        page_token = None
+        while True:
+            try:
+                param = {}
+                if page_token:
+                    param['pageToken'] = page_token
+                children = service.children().list(folderId=folder_id, **param).execute()
+
+                for child in children.get('items', []):
+                    yield child
+                page_token = children.get('nextPageToken')
+                if not page_token:
+                    break
+            except errors.HttpError, error:
+                break
+    # try
+    xx=[]
+    for x in print_file_metadata(drive_service,fid):
+        ffid="https://drive.google.com/uc?export=download&id="+x['id']
+        xx.append({'title':x['title'],
+        'altLink':x['alternateLink'],
+        'dL':ffid,
+        'iLink':x['iconLink'],
+        'ctype':x['mimeType'],
+        'id':x['id'] })
+    # write contents to JSON file
+    with open("data_folder.json", "w") as fList: 
+        json.dump(xx, fList)
+    #moment of truth
+    with open("data_folder.json","r") as ffList:
+        dataF = json.load(ffList)
+    return render(request, "about.html",{'app':dataF})

@@ -1,2 +1,38 @@
-Hello World! Its the About page!
-{{app}}
+
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+Hello World! Its the contents from your folder
+</h1>
+<div>
+    <h1>Its Your Google Drive Files Gowryy !!</h1>
+    <br>
+    {% for xx in app %}
+        <div class="itemF">
+            <div class="picture left" style="width:auto; padding:15px; height=150px;">
+                {% for key,value in xx.items %}
+                    {% if value == "application/vnd.google-apps.folder" %}
+                        <a href="{% url 'pages'%}?folder={{xx.id}}" target="_blank"> I'm a folder </a>
+                    {% endif %}
+                    {% if key == "title" %}
+                        <b> <br> <h3> {{ value }} </h3></b>
+                    {% elif key == "altLink" %}
+                        <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                    {% elif key == "dL" %}
+                        <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
+                    {% elif key == "iLink" %}
+                        <img src={{value}} width="100" >
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

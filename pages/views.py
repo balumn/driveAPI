@@ -130,8 +130,6 @@ def about(request,folder=None):
 
     drive_service = build('drive', 'v2', http=http)
 
-    # get details of file
-    ff=[]
     def print_file_metadata(service, file_id):
         page_token = None
         while True:
@@ -139,9 +137,7 @@ def about(request,folder=None):
             if page_token:
                 param['pageToken'] = page_token
             file = service.files().get(fileId=file_id).execute()
-            yield file
-
-
+            return file
 
     def print_files_in_folder(service, folder_id):
         page_token = None
@@ -161,18 +157,29 @@ def about(request,folder=None):
                 break
     # try
     xx=[]
-    for x in print_file_metadata(drive_service,fid):
+    yy=[]
+    metaData=[]
+    for x in print_files_in_folder(drive_service,fid):
         ffid="https://drive.google.com/uc?export=download&id="+x['id']
-        xx.append({'title':x['title'],
-        'altLink':x['alternateLink'],
-        'dL':ffid,
-        'iLink':x['iconLink'],
-        'ctype':x['mimeType'],
-        'id':x['id'] })
+        xx.append(x)
+        yy.append(x['id'])
     # write contents to JSON file
-    with open("data_folder.json", "w") as fList: 
-        json.dump(xx, fList)
-    #moment of truth
-    with open("data_folder.json","r") as ffList:
+    with open("data_files_in_folder.json","w") as fList: 
+        json.dump(yy, fList)
+    
+    for f in yy:
+        meta=print_file_metadata(drive_service,f)
+        fid="https://drive.google.com/uc?export=download&id="+meta['id']
+        metaData.append({'title':meta['title'],
+            'altLink':meta['alternateLink'],
+            'dL':fid,
+            'iLink':meta['iconLink'],
+            'ctype':meta['mimeType'],
+            'id':meta['id']})
+    with open("data_full_in_folder.json","w") as fList: 
+        json.dump(metaData, fList)
+
+    # moment of truth
+    with open("data_full_in_folder.json","r") as ffList:
         dataF = json.load(ffList)
     return render(request, "about.html",{'app':dataF})

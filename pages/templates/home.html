@@ -10,71 +10,17 @@
             min-width: 100px;
             color: #333;
         }
-        itemF{
-            background: #70a876;
-        }
-
         #main {
             margin: 30px auto;
             padding: 15px;
             border: 0px solid;
             border-radius: 5px;
             background: #70a876;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-            height: auto;
-            margin: auto;
-        }
-
-        #img-div {
-            margin: -5px;
-            margin-top: 20px;
-            width: 80%;
-            border: 5px solid white;
-            background: white;
-        }
-
-        #img-caption {
-            margin: 5px;
-        }
-
-        .headline {
-            margin-top: 50px;
-            text-align: left;
-        }
-
-        ul {
-            max-width: 250px;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        li {
-            margin: 5px;
-        }
-
-        blockquote {
-            font-style: italic;
-        }
-        
-        .picture {
+        }       
+       .picture {
             background-color: #fff;
             border: 1px solid #CCCCCC;
-            padding: 3px;
-            margin: 10px;
             font: 11px/1.4em Arial, sans-serif;
-        }
-        .picture img {
-            border: 0px solid #fc55bf;
-            vertical-align: middle;
-            margin-bottom: 3px;
-        }
-        .right {
-            margin: 0.5em 0pt 0.5em 0.8em;
-            float: right;
         }
         .left {
             margin: 0.5em 0.8em 0.5em 0;
@@ -88,56 +34,41 @@
     <div id="main1">
         <h1>A Django Lover</h1>
         <div>who saved a billion lives</div>
-        <div id="img-div">
-            <img id="img" src="https://c2.staticflickr.com/4/3689/10613180113_fdf7bcd316_b.jpg" alt "pic from flickr">
-            <div id="img-caption">
-                Dr. Norman Borlaug, second from left, trains biologists in Mexico on how to increase wheat yields - part of his life-long
-                war on hunger.
-            </div>
-        </div>
-        <div>
-            <ul>
-                <h3 class="headline">Here's a time line of Dr. Borlaug's life:</h3>
-                <li>
-                    <strong>1914</strong> - Born in Cresco, Iowa</li>
-                <li>
-                    <strong>1933</strong> - Leaves his family's farm to attend the University of Minnesota, thanks to a Depression
-                    era program known as the "National Youth Administration"</li>
-                <li>
-                    <strong>1935</strong> - Has to stop school and save up more money. Works in the Civilian Conservation Corps,
-                    helping starving Americans. "I saw how food changed them", he said. "All of this left scars on me."</li>
-            </ul>
-
-            <blockquote>
-                <p>"Borlaug's life and achievement are testimony to the far-reaching contribution that one man's towering intellect,
-                    persistence and scientific vision can make to human peace and progress."</p>
-                <div>-- Indian Prime Minister Manmohan Singh</div>
-            </blockquote>
-            <h3>If you have time, you should read more about this incredible human being on his
-                <a id="tribute-link" href="https://en.wikipedia.org/wiki/Norman_Borlaug" target="_blank">Wikipedia entry</a>.</h3>
-        </div>
+        <p> Apply some nice styles. Im running retro! </p>        
     </div>
     <div>
         <h1>Its Your Google Drive Files Gowryy !!</h1>
         <br>
         {% for xx in fList %}
-                <div class="itemF">
-                    <div class="picture left" style="width:auto; padding:15px; height=150px;">
+                <div>
+                    <div class="picture left" style="height:200px; padding:5px;margin:15px;">
+                        {% for key,value in xx.items %}
+                            {% if key == "title" %}
+                                <b> <br> <h3> {{ value }} </h3></b>
+                            {% endif %}
+                        {% endfor %}
+                        {% for key,value in xx.items %}
+                            {% if key == "altLink" %}
+                                <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                             {% endif %}
+                        {% endfor %}
+                        {% for key,value in xx.items %}
+                            {% if key == "dL" %}
+                                <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
+                             {% endif %}
+                        {% endfor %}
+                        {% for key,value in xx.items %}
+                            {% if key == "iLink" %}
+                                <div class="img">
+                                <img src={{value}} width="100" >
+                                </div>
+                            {% endif %}
+                        {% endfor %} 
                         {% for key,value in xx.items %}
                             {% if value == "application/vnd.google-apps.folder" %}
                                 <a href="{% url 'pages'%}?folder={{xx.id}}" target="_blank"> I'm a folder </a>
                             {% endif %}
-                            {% if key == "title" %}
-                                <b> <br> <h3> {{ value }} </h3></b>
-                            {% elif key == "altLink" %}
-                                <a href={{value}} target="_blank"> <br> <b> View </b> </a>
-                            {% elif key == "dL" %}
-                                <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
-                            {% elif key == "iLink" %}
-                                <img src={{value}} width="100" >
-                            {% endif %}
                         {% endfor %}
-
                     </div>
                 </div>
         {% endfor %}

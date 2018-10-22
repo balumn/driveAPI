@@ -1,1 +1,116 @@
-Hello World! Its the About page!
+<html>
+
+<head>
+    <title> My Django page </title>
+    <style>
+        html,
+        body {
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            text-align: center;
+            min-width: 100px;
+            color: #333;
+        }
+        itemF{
+            background: #70a876;
+        }
+
+        #main {
+            margin: 30px auto;
+            padding: 15px;
+            border: 0px solid;
+            border-radius: 5px;
+            background: #70a876;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            height: auto;
+            margin: auto;
+        }
+
+        #img-div {
+            margin: -5px;
+            margin-top: 20px;
+            width: 80%;
+            border: 5px solid white;
+            background: white;
+        }
+
+        #img-caption {
+            margin: 5px;
+        }
+
+        .headline {
+            margin-top: 50px;
+            text-align: left;
+        }
+
+        ul {
+            max-width: 250px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        li {
+            margin: 5px;
+        }
+
+        blockquote {
+            font-style: italic;
+        }
+        
+        .picture {
+            background-color: #fff;
+            border: 1px solid #CCCCCC;
+            padding: 3px;
+            margin: 10px;
+            font: 11px/1.4em Arial, sans-serif;
+        }
+        .picture img {
+            border: 0px solid #fc55bf;
+            vertical-align: middle;
+            margin-bottom: 3px;
+        }
+        .right {
+            margin: 0.5em 0pt 0.5em 0.8em;
+            float: right;
+        }
+        .left {
+            margin: 0.5em 0.8em 0.5em 0;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h1>Its Your Files in the Folder Gowryy !!</h1>
+        <br>
+        {% for xx in app %}
+                <div class="itemF">
+                    <div class="picture left" style="width:auto; padding:15px; height=150px;">
+                        {% for key,value in xx.items %}
+                            {% if value == "application/vnd.google-apps.folder" %}
+                                <a href="{% url 'pages'%}?folder={{xx.id}}" target="_blank"> I'm a folder </a>
+                            {% endif %}
+                            {% if key == "title" %}
+                                <b> <br> <h3> {{ value }} </h3></b>
+                            {% elif key == "altLink" %}
+                                <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                            {% elif key == "dL" %}
+                                <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
+                            {% elif key == "iLink" %}
+                                <img src={{value}} width="100" >
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+        {% endfor %}
+
+    </div>
+</body>
+
+</html>

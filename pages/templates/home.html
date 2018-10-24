@@ -58,18 +58,9 @@
                                 <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
                              {% endif %}
                         {% endfor %}
-                        {% for key,value in xx.items %}
-                            {% if key == "iLink" %}
-                                <div class="img">
-                                <img src={{value}} width="100" >
-                                </div>
-                            {% endif %}
-                        {% endfor %} 
-                        {% for key,value in xx.items %}
-                            {% if value == "application/vnd.google-apps.folder" %}
-                                <a href="{% url 'pages'%}?folder={{xx.id}}" target="_blank"> I'm a folder </a>
-                            {% endif %}
-                        {% endfor %}
+                        <div><img src="https://openclipart.org/image/2400px/svg_to_png/97543/text-file-icon.png" width="100px" height="100px">
+                        </div>
+
                     </div>
                 </div>
         {% endfor %}

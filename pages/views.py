@@ -12,6 +12,8 @@ import webbrowser
 from oauth2client.file import Storage
 from googleapiclient.discovery import build
 from oauth2client.client import OAuth2WebServerFlow
+import dropbox
+import unicodedata
 
 
 # from .forms import PostForm
@@ -94,9 +96,12 @@ def print_files_in_folder(service, folder_id):
 
 
 def homme(request):
+    # authentication
     drive_service = auth()  
-    # exporting json
+    dbx = dropbox.Dropbox('-M4Msup5ufAAAAAAAAAAD3WGD3_Hz4EI7SHmVwt7nEpdBjPoZsACLHuEgMIVKKZd')
+    
     xx=[]
+    # google drive
     for x in list_files(drive_service):
         if x.get('title') and x.get('alternateLink'):
             fid="https://drive.google.com/uc?export=download&id="+x['id']
@@ -113,10 +118,28 @@ def homme(request):
     fList.close()
     # reading from JSON file -- Expermental feature
     with open('data_file.json') as json_file:
-        dataP = json.load(json_file)
+        dataG = json.load(json_file)
+    json_file.close()
+
+
+    # drobox
+    yy=[]
+    for entry in dbx.files_list_folder('').entries:
+        viewLink = dbx.sharing_create_shared_link('/'+entry.name)
+        viewL=list(unicodedata.normalize('NFKD',viewLink.url).encode('ascii','ignore'))
+        viewL[-1]='1'
+        dLink="".join(viewL)
+        yy.append({'title':entry.name,'id':entry.id,'altLink':viewLink.url,'dL':dLink})
+    with open("drop_data_file.json", "w") as fList: 
+        json.dump(yy, fList)
+    fList.close()
+    # reading from JSON file -- Expermental feature
+    with open('drop_data_file.json') as json_file:
+        dataD = json.load(json_file)
     json_file.close()
     
-    return render_to_response("home.html",{"fList" : dataP})
+
+    return render_to_response("home.html",{"fList" : dataG,"dFile":dataD})
 
 def about(request,folder=None):
     fid = request.GET.get('folder')

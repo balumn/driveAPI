@@ -28,9 +28,10 @@ def homePageView(request):
     # integrating
 
 def auth(): 
+    # Google Auth function. get your google cloud auth client ids
     # client IDs
-    CLIENT_ID='500291203402-7vp5mndmfikul17fojcpk152f61vdeup.apps.googleusercontent.com'
-    CLIENT_SECRET='DSalAwqk8sp9u_yH--LLrxS1'
+    CLIENT_ID='' #paste your client ID here
+    CLIENT_SECRET='' #paste your secret ID here
     OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
     REDIRECT_URI ='urn:ietf:wg:oauth:2.0:oob'
     OUT_PATH = os.path.join(os.path.dirname(__file__), 'out')
@@ -45,7 +46,7 @@ def auth():
         # Run through the OAuth flow and retrieve credentials
         flow = OAuth2WebServerFlow(CLIENT_ID, CLIENT_SECRET, OAUTH_SCOPE, REDIRECT_URI)
         authorize_url = flow.step1_get_authorize_url()
-        pastedCode='4/ZABdayNUfm_EN0ehvQed6m3bGdUXVqX2y7DEsTHAI9j3H-9XGHcG92E'
+        pastedCode='' # paste your secret code
         code = pastedCode
         credentials = flow.step2_exchange(code)
         storage.put(credentials)
@@ -96,9 +97,10 @@ def print_files_in_folder(service, folder_id):
 
 
 def homme(request):
-    # authentication
+    # dropbox authentication.
+    # run a quick google search and find out how I have done this.
     drive_service = auth()  
-    dbx = dropbox.Dropbox('-M4Msup5ufAAAAAAAAAAD3WGD3_Hz4EI7SHmVwt7nEpdBjPoZsACLHuEgMIVKKZd')
+    dbx = dropbox.Dropbox('')
     
     xx=[]
     # google drive

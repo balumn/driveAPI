@@ -1,0 +1,80 @@
+{% extends "admin_app/admin.html" %}
+{% load static %}
+{% block content %}
+<style>
+    html,
+    body {
+        font-family: "Trebuchet MS", Helvetica, sans-serif;
+        text-align: center;
+        min-width: 100px;
+        color: #333;
+    }
+
+    #main {
+        margin: 30px auto;
+        padding: 15px;
+        border: 0px solid;
+        border-radius: 5px;
+        background: #70a876;
+    }
+
+    .picture {
+        background-color: #fff;
+        border: 1px solid #CCCCCC;
+        padding: 2px;
+        font: 11px/1.4em Arial, sans-serif;
+    }
+
+    .left {
+        margin: 0.5em 0.8em 0.5em 0;
+        float: left;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Its Your Drop Box Files!!</h1>
+
+        <div>
+            {% if dFile %}
+            {% for xx in dFile %}
+            <div>
+                <div class="picture left" style="height:200px; padding:5px;margin:15px;">
+                    {% for key,value in xx.items %}
+                    {% if key == "title" %}
+                    <b> <br>
+                        <h3> {{ value }} </h3>
+                    </b>
+                    {% endif %}
+                    {% endfor %}
+                    {% for key,value in xx.items %}
+                    {% if key == "altLink" %}
+                    <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                    {% endif %}
+                    {% endfor %}
+                    {% for key,value in xx.items %}
+                    {% if key == "dL" %}
+                    <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
+                    {% endif %}
+                    {% endfor %}
+                    <div><img src="https://openclipart.org/image/2400px/svg_to_png/97543/text-file-icon.png"
+                            width="100px" height="100px">
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+<link href="{% static 'admin_app/vendor/morrisjs/morris.css' %}" rel="stylesheet">
+
+<!-- Morris Charts JavaScript -->
+<script src="{% static 'admin_app/vendor/raphael/raphael.min.js' %}"></script>
+<script src="{% static 'admin_app/vendor/morrisjs/morris.min.js' %}"></script>
+<script src="{% static 'admin_app/data/morris-data.js' %}"></script>
+{% endblock %}

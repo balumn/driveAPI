@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 600px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+	<center>
+<h1>Welcome to Snapper</h1>
+</br>
+<div class="row">
+  <div class="column" style="background-color:lightgray;">
+    <h2>Click Link Below to Sign in as Admin</h2>
+    </br> </br> </br> 
+    <a href="/login">  <button type="button" class="btn btn-primary btn-lg">Sign in </button></a>
+  </div>
+  <div class="column" style="background-color:lightslategray;">
+    <h2>Click Link Below to Sign in as Agent</h2>
+    </br> </br> </br> 
+    <a href="/agentLogin">  <button type="button" class="btn btn-primary btn-lg">Sign in </button></a>
+  </div>
+</div>
+</center>
+</body>
+</html>
+

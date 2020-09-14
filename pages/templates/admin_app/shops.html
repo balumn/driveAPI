@@ -1,0 +1,318 @@
+
+{% extends "admin_app/admin.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+.button {
+  position: relative;
+  background-color: #add8e6;
+  border: none;
+  font-size: 18px;
+  color: #00000;
+  padding: 5px;
+  width: 130px;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.button:after {
+  content: "";
+  background: #f1f1f1;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+</style>
+
+
+{% for message in messages %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR or message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                <div class="alert alert-danger">
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR or message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success">
+            {% endif %}
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message }}
+
+                </div>
+        {% endfor %}
+
+
+
+</br>
+</br>
+</br>
+</br>
+
+
+<div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Enter Shop Details</h4>
+                                </div>
+                                <div class="card-body">
+				<form name="RegForm" action="#"  method="post" onsubmit="return check()">
+       					 {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-md-3 pr-1">
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    <input type="text" class="form-control" name="names">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 px-1">
+                                                <div class="form-group">
+                                                    <label>Owner Name</label>
+                                                    <input type="text" class="form-control" name="Owner_name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 pl-1">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Mobile Number</label>
+                                                    <input type="text" class="form-control" name="numbers">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 pr-1">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    <input type="text" class="form-control" name="country">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 pl-1">
+                                                <div class="form-group">
+                                                    <label>Region</label>
+                                                    <input type="text" class="form-control" name="region">
+                                                </div>
+                                            </div>
+                                        </div>
+                                
+					<div class="row">
+                                            <div class="col-md-4 pr-1">
+                                                <div class="form-group">
+                                                    <label>E-mail</label>
+                                                    <input type="text" class="form-control"  name="email">
+                                                </div>
+                                            </div>
+					    </br> 
+					
+					<div class="row">
+                                            <div class="col-md-4 px-1 ">
+                                                <div class="form-group" >
+                                                    <label>Class</label>
+                                                   <select type="text"  name="markUp">
+ 						   <option value="null">Choose </option>
+ 						   <option value="bronze">Bronze</option>
+ 						   <option value="silver">Silver</option>
+  						   <option value="gold">Gold</option>
+ 						   <option value="platinum">Platinum</option>
+						   </select>
+                                                </div>
+                                            </div>
+                                        </div>
+  
+						{% load custom_tags %}
+						{% if not request.user|has_group:"agent" %} 
+ 	
+
+					    <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Agent Name</label>
+                                                    <select type="text" name="agentName">
+							    <option value="null">choose</option>
+							    {% for values in agentname %}
+							    <option value={{values.name}}>{{values.name}}</option>
+                                               	             {% endfor %}
+						   </select>
+						    	
+						</div>
+                                            </div>
+					    {%endif%}
+					    <!--
+					    <div class="col-md-4 pl-1">
+                                                <div class="form-group">
+                                                    <label>Postal Code</label>
+                                                    <input type="number" class="form-control" placeholder="ZIP Code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>About Me</label>
+                                                    <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+					--!>
+					<button type="submit" class="btn btn-info btn-fill">Submit</button>
+					</form>
+
+
+
+
+	<!-- DataTables Responsive CSS -->
+    <link href="{% static 'admin_app/vendor/datatables-responsive/dataTables.responsive.css' %}" rel="stylesheet">
+    <!-- DataTables JavaScript -->
+    <script src="{% static 'admin_app/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin_app/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'admin_app/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true,
+	    ordering:false
+
+        });
+
+    });
+    </script>
+
+<script> 
+function check()                                    
+{ 
+    var names = document.forms["RegForm"]["names"];               
+    var Owner_name = document.forms["RegForm"]["Owner_name"];    
+    var numbers = document.forms["RegForm"]["numbers"];  
+    var country =  document.forms["RegForm"]["country"];  
+    var region = document.forms["RegForm"]["region"];  
+    var markUp = document.forms["RegForm"]["markUp"];  
+    var agentName = document.forms["RegForm"]["agentName"];  
+    var email = document.forms["RegForm"]["email"];  
+   
+    if (names.value == "")                                  
+    { 
+        window.alert("Please enter shop name."); 
+        names.focus(); 
+        return false; 
+    } 
+   
+    if (Owner_name.value == "")                               
+    { 
+        window.alert("Please enter owner name."); 
+        Owner_name.focus(); 
+        return false; 
+    } 
+       
+    if (numbers.value == "")                                   
+    { 
+        window.alert("Please enter mobile number"); 
+        numbers.focus(); 
+        return false; 
+    } 
+   
+    if (country.value == "")                           
+    { 
+        window.alert("Please enter the country"); 
+        country.focus(); 
+        return false; 
+    } 
+   
+    if (region.value == "")                        
+    { 
+        window.alert("Please enter your region"); 
+        region.focus(); 
+        return false; 
+    } 
+    if (email.value == "")                        
+    { 
+        window.alert("Please enter your e-mail id"); 
+        email.focus(); 
+        return false; 
+    }
+  if (markUp.selectedIndex < 1)                  
+    { 
+        console.log("in class selection")
+        console.log(markUp)
+	alert("Please select your class"); 
+        markUp.focus(); 
+        return false; 
+    } 
+   if (agentName.selectedIndex < 1)                  
+    { 
+        console.log("in agent name selection")
+        console.log(markUp)
+        console.log(agentName)
+        alert("Please select your agent name"); 
+        agentName.focus(); 
+        return false; 
+    } 
+   
+
+    return true; 
+}
+</script>
+
+
+
+
+
+
+<script>
+function validateForm() {
+  var names = document.forms["myForm"]["names"];
+  var Owner_name = document.forms["myForm"]["Owner_name"];
+  var numbers = document.forms["myForm"]["numbers"];
+  var country = document.forms["myForm"]["country"];
+  var region = document.forms["myForm"]["region"];
+  var markUp = document.forms["myForm"]["markUp"];
+  if (names.value == "") {
+    alert("Enter Shop Name");
+    names.focus()
+    return false;
+  }
+if (Owner_name.value == "") {
+    window.alert("Enter Owner Name");
+    Owner_name.focus()
+    return false;
+  }
+if (numbers.value == "") {
+    window.alert("Enter Mobile Number");
+    numbers.focus()
+    return false;
+  }
+if (country.value == "") {
+    window.alert("Enter the Countrty");
+    country.focus()
+    return false;
+  }
+if (region.value == "") {
+    window.alert("Enter the Region");
+    region.focus()
+    return false;
+  }
+if (markUp.value == "") {
+    window.alert("Enter the Markup");
+    markUp.focus()
+    return false;
+  }
+
+
+}
+</script>
+
+
+{% endblock %}
+

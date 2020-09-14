@@ -40,30 +40,33 @@
         <div>
         <h1>Its Your Drop Box Files!!</h1>
         <br>
-        {% for xx in dFile %}
-                <div>
-                    <div class="picture left" style="height:200px; padding:5px;margin:15px;">
-                        {% for key,value in xx.items %}
-                            {% if key == "title" %}
-                                <b> <br> <h3> {{ value }} </h3></b>
-                            {% endif %}
-                        {% endfor %}
-                        {% for key,value in xx.items %}
-                            {% if key == "altLink" %}
-                                <a href={{value}} target="_blank"> <br> <b> View </b> </a>
-                             {% endif %}
-                        {% endfor %}
-                        {% for key,value in xx.items %}
-                            {% if key == "dL" %}
-                                <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
-                             {% endif %}
-                        {% endfor %}
-                        <div><img src="https://openclipart.org/image/2400px/svg_to_png/97543/text-file-icon.png" width="100px" height="100px">
-                        </div>
+        {% if dFile %}
+            {% for xx in dFile %}
+                    <div>
+                        <div class="picture left" style="height:200px; padding:5px;margin:15px;">
+                            {% for key,value in xx.items %}
+                                {% if key == "title" %}
+                                    <b> <br> <h3> {{ value }} </h3></b>
+                                {% endif %}
+                            {% endfor %}
+                            {% for key,value in xx.items %}
+                                {% if key == "altLink" %}
+                                    <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                                {% endif %}
+                            {% endfor %}
+                            {% for key,value in xx.items %}
+                                {% if key == "dL" %}
+                                    <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
+                                {% endif %}
+                            {% endfor %}
+                            <div><img src="https://openclipart.org/image/2400px/svg_to_png/97543/text-file-icon.png" width="100px" height="100px">
+                            </div>
 
+                        </div>
                     </div>
-                </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
+
 
     </div>
     <br><br><br><br><br>
@@ -73,39 +76,41 @@
         <h1>Its Your Google Drive Files Gowryy !!</h1>
         </div>
         <br>
-        {% for xx in fList %}
-                <div>
-                    <div class="picture left" style="height:200px; padding:5px;margin:15px;">
-                        {% for key,value in xx.items %}
-                            {% if key == "title" %}
-                                <b> <br> <h3> {{ value }} </h3></b>
-                            {% endif %}
-                        {% endfor %}
-                        {% for key,value in xx.items %}
-                            {% if key == "altLink" %}
-                                <a href={{value}} target="_blank"> <br> <b> View </b> </a>
-                             {% endif %}
-                        {% endfor %}
-                        {% for key,value in xx.items %}
-                            {% if key == "dL" %}
-                                <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
-                             {% endif %}
-                        {% endfor %}
-                        {% for key,value in xx.items %}
-                            {% if key == "iLink" %}
-                                <div class="img">
-                                <img src={{value}} width="100" >
-                                </div>
-                            {% endif %}
-                        {% endfor %} 
-                        {% for key,value in xx.items %}
-                            {% if value == "application/vnd.google-apps.folder" %}
-                                <a href="{% url 'pages'%}?folder={{xx.id}}" target="_blank"> I'm a folder </a>
-                            {% endif %}
-                        {% endfor %}
+        {% if fList %}
+            {% for xx in fList %}
+                    <div>
+                        <div class="picture left" style="height:200px; padding:5px;margin:15px;">
+                            {% for key,value in xx.items %}
+                                {% if key == "title" %}
+                                    <b> <br> <h3> {{ value }} </h3></b>
+                                {% endif %}
+                            {% endfor %}
+                            {% for key,value in xx.items %}
+                                {% if key == "altLink" %}
+                                    <a href={{value}} target="_blank"> <br> <b> View </b> </a>
+                                {% endif %}
+                            {% endfor %}
+                            {% for key,value in xx.items %}
+                                {% if key == "dL" %}
+                                    <a href={{value}} target="_blank"> <br> <b> Download </b> </a>
+                                {% endif %}
+                            {% endfor %}
+                            {% for key,value in xx.items %}
+                                {% if key == "iLink" %}
+                                    <div class="img">
+                                    <img src={{value}} width="100" >
+                                    </div>
+                                {% endif %}
+                            {% endfor %} 
+                            {% for key,value in xx.items %}
+                                {% if value == "application/vnd.google-apps.folder" %}
+                                    <a href="{% url 'pages'%}?folder={{xx.id}}" target="_blank"> I'm a folder </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
 
     </div>
 </body>

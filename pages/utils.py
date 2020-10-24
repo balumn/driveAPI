@@ -9,7 +9,7 @@ from configparser import ConfigParser
 
 
 class GoogleDrive:
-    def auth(self): 
+    def __init__(self): 
         config = ConfigParser()
         config.read('.env')
         OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
@@ -31,30 +31,25 @@ class GoogleDrive:
         http = httplib2.Http()
         http = credentials.authorize(http)
         d_s = build('drive', 'v2', http=http)
-        return d_s
+        self.service = d_s
+        self.owner = config['creds']['owner']
 
-
-    def list_files(self,service):
-        page_token = None
+    def list_files(self,page_token = None):
         while True:
             param = {}
             if page_token:
                 param['pageToken'] = page_token
-            files = service.files().list(**param).execute()
+            files = service.files().list(q=f"'{self.owner}' in owner",fields='nextPageToken, items(id, title)',pageToken=page_token).execute()
             for item in files['items']:
                 yield item
             page_token = files.get('nextPageToken')
             if not page_token:
                 break
 
-    def print_file_metadata(self,service, file_id):
+    def get_file_metadata(self,service, file_id):
         page_token = None
-        while True:
-            param = {}
-            if page_token:
-                param['pageToken'] = page_token
-            file = service.files().get(fileId=file_id).execute()
-            return file
+        file = service.files().get(fileId=file_id).execute()
+
 
     def print_files_in_folder(self,service, folder_id):
         page_token = None

@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 data_file.json
 .env
+*.json

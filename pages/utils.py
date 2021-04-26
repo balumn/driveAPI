@@ -1,38 +1,37 @@
-from oauth2client.client import OAuth2WebServerFlow
-from oauth2client.file import Storage
+from __future__ import print_function
+import os.path
 from googleapiclient.discovery import build
-from oauth2client.client import OAuth2WebServerFlow
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+
 from django.contrib import messages
 import time
 import os
 from configparser import ConfigParser
+from django.conf import settings
 
+SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
 
 class GoogleDrive:
     def __init__(self): 
-        config = ConfigParser()
-        config.read('.env')
-        OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
-        REDIRECT_URI ='urn:ietf:wg:oauth:2.0:oob'
-        OUT_PATH = os.path.join(os.path.dirname(__file__), 'out')
-        CREDS_FILE = os.path.join(os.path.dirname(__file__), 'credentials.json')
+        creds = None
+        if os.path.exists('token.json'):
+            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+        # If there are no (valid) credentials available, let the user log in.
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    'credentials.json', SCOPES)
+                creds = flow.run_local_server(port=0)
+            # Save the credentials for the next run
+            with open('token.json', 'w') as token:
+                token.write(creds.to_json())
 
-        if not path.exists(OUT_PATH):
-            os.makedirs(OUT_PATH)
+        self.service = build('drive', 'v3', credentials=creds)
 
-        storage = Storage(CREDS_FILE)
-        credentials = storage.get()
-        if credentials is None:
-            messages.error(request, "Please enable Goolge Drive APIs")
-            messages.error(request, "And download your credentials.json onto this Project Root Directory")
-            time.sleep(3)
-            return None
-
-        http = httplib2.Http()
-        http = credentials.authorize(http)
-        d_s = build('drive', 'v2', http=http)
-        self.service = d_s
-        self.owner = config['creds']['owner']
 
     def list_files(self,page_token = None):
         while True:
@@ -65,5 +64,6 @@ class GoogleDrive:
                 page_token = children.get('nextPageToken')
                 if not page_token:
                     break
-            except errors.HttpError, error:
+            except Exception as e:
+                print(e)
                 break
